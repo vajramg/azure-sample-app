@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db # has to match .spec.template.metadata.labels
+  serviceName: "db-svc"
+  replicas: 3 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: db # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: db
+          image: postgres:10.4
+          ports:
+            - containerPort: 5432
+              name: db
+          volumeMounts:
+            - name: db-volume
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres
+
+            - name: my-secret
+              mountPath: "/mnt/secret-store"
+              readOnly: true
+          env:
+            - name: POSTGRES_USER_FILE
+              value: /mnt/secret-store/db-user
+            - name: POSTGRES_PASSWORD_FILE
+              value: /mnt/secret-store/db-password
+            - name: POSTGRES_DB
+              value: launchpage
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+      volumes:
+        - name: my-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kv-sync"
+
+  volumeClaimTemplates:
+    - metadata:
+        name: db-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "default"
+        resources:
+          requests:
+            storage: 1Gi

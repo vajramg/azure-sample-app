@@ -1,0 +1,30 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"secrets-store.csi.x-k8s.io/v1","kind":"SecretProviderClass","metadata":{"annotations":{},"name":"azure-kv-sync","namespace":"default"},"spec":{"parameters":{"keyvaultName":"myvg1988","objects":"array:\n  - |\n    objectName: db-password           # keyvault secret name\n    objectType: secret\n","tenantId":"57b08271-f568-4659-9d9e-2776244a6b8c","usePodIdentity":"false","useVMManagedIdentity":"true","userAssignedIdentityID":"5c29225f-111a-4372-9688-a2ab2a06db39"},"provider":"azure"}}
+  creationTimestamp: "2026-05-19T06:19:55Z"
+  generation: 2
+  name: azure-kv-sync
+  namespace: default
+  resourceVersion: "2173293"
+  uid: 7a39a45e-87f8-4bcb-bc63-41dac0ca801c
+spec:
+  parameters:
+    keyvaultName: myvg1988
+    objects: |
+      array:
+        - |
+          objectName: db-password           # keyvault secret name
+          objectType: secret
+
+        - |
+          objectName: db-user1      # keyvault secret name
+          objectType: secret
+
+    tenantId: 57b08271-f568-4659-9d9e-2776244a6b8c
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: 5c29225f-111a-4372-9688-a2ab2a06db39
+  provider: azure
