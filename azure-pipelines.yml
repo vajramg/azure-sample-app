@@ -22,7 +22,7 @@ stages:
               ls -ltr
               chmod +x terraform
               sudo mv terraform /usr/local/bin
-              displayName: Install Terraform
+              terraform version
       
             
 
