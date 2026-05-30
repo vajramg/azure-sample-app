@@ -21,7 +21,7 @@ stages:
               unzip -o terraform_1.7.5_linux_amd64.zip
               ls -ltr
               chmod +x terraform
-              ./terraform version
+              sudo mv terraform /usr/local/bin
               displayName: Install Terraform
       
             
