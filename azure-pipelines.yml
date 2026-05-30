@@ -25,7 +25,18 @@ stages:
           - script: | 
               cd terraform
               terraform version
-      
+          - script: | 
+              cd terraform
+              terraform init
+          - script: | 
+              cd terraform
+              terraform validate
+          - script: | 
+              cd terraform
+              terraform plan
+          - script: | 
+              cd terraform
+              terraform apply -auto-approve
             
 
 
