@@ -32,6 +32,8 @@ stages:
                  
                  cd terraform
 
+                 ls -ltr
+
                  terraform init
 
                  terraform validate
