@@ -29,22 +29,13 @@ stages:
                scriptLocation: inlineScript
                inlineScript: |
                  az account show
-          - script: | 
-              cd terraform
-              terraform version
-          - script: | 
-              cd terraform
-              terraform init
-          - script: | 
-              cd terraform
-              terraform validate
-          - script: | 
-              cd terraform
-              terraform plan
-          - script: | 
-              cd terraform
-              terraform apply -auto-approve
-            
+                 
+                 cd terraform
 
+                 terraform init
 
-      
+                 terraform validate
+
+                 terraform plan
+
+                 terraform apply -auto-approve
