@@ -40,5 +40,6 @@ resource "azurerm_role_assignment" "role" {
   principal_id                     = module.aks.kubelet_object_id
   scope                            = module.acr.acr_id
   skip_service_principal_aad_check = true
+  role_definition_name             = "AcrPull"
 }
 
