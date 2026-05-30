@@ -38,4 +38,4 @@ stages:
 
                  terraform plan
 
-                 terraform apply -var-file=dev.tfvars -auto-approve
+                 terraform apply -var-file="dev.tfvars" -auto-approve
