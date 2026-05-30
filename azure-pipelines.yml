@@ -36,8 +36,8 @@ stages:
 
                  terraform init
 
-                 terraform validate
+                 terraform validate -var-file="dev.tfvars" -auto-approve
 
-                 terraform plan
+                 terraform plan -var-file="dev.tfvars" -auto-approve
 
                  terraform apply -var-file="dev.tfvars" -auto-approve
