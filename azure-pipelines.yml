@@ -73,10 +73,17 @@ stages:
              azureResourceGroup: 'aks-rg'
              kubernetesCluster: 'myaks-cluster'
              namespace: 'dev'
-             manifests: 'manifests'
+             manifests: |
+              manifests/flask-deployment.yaml
+              manifests/azure.yaml
+              manifests/flask-service.yaml
+              manifests/ingress.yaml
+              manifests/postgres-deployment.yaml
+              manifests/postgres-secret.yaml
+              pmanifests/vc.yaml
+              manifests/secret-provder.yaml
+              manifests/service.yaml
+              manifests/statefulset.yaml
              containers: 'vg1988myacr.azurecr.io/myapp:$(Build.BuildId)'
-             imagePullSecrets: |
-               az aks update \
-                 --name myaks-cluster \
-                 --resource-group aks-rg \
-                 --attach-acr vg1988myacr
+             imagePullSecrets: ''
+                 
