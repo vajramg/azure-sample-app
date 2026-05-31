@@ -43,3 +43,9 @@ resource "azurerm_role_assignment" "role" {
   role_definition_name             = "AcrPull"
 }
 
+module "keyvault" {
+  source              = "./modules/keyvault"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  subscription_id     = var.subscription_id
+}
