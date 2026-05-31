@@ -43,13 +43,13 @@ spec:
 
               value: "/mnt/secret-store/db-password"
 
-    volumeMounts:
-      - name: my-secret
+          volumeMounts:
+          - name: my-secret
 
-        mountPath: "/mnt/secret-store"
+            mountPath: "/mnt/secret-store"
 
-        readOnly: true
-        volumes:
+            readOnly: true
+      volumes:
           - name: my-secret
             csi:
               driver: secrets-store.csi.k8s.io
