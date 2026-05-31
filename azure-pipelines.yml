@@ -40,29 +40,34 @@ stages:
 
                  terraform plan -var-file="dev.tfvars"
 
-                 terraform destroy -var-file="dev.tfvars" -auto-approve
+                 terraform apply -var-file="dev.tfvars" -auto-approve
   - stage: build
+    dependsOn: terraform
     jobs:
       - job: build
         pool:
          vmImage: 'ubuntu-latest'
-         steps:
-           - task: AzureCLI@3
+        steps:
+           - task: AzureCLI@2
              inputs:
                connectionType: 'azureRM'
                azureSubscription: 'az-resource'
                scriptType: 'bash'
                scriptLocation: 'inlineScript'
                inlineScript: |
-                azure acr login  --name vg1988myacr
-                 docker build -t $(acr).azureacr.io/$(imageName):$(Build:BuildId)
+                az acr login  --name vg1988myacr
+                 docker build -t $(acr).azurecr.io/$(imageName):$(Build.BuildId) ./app
   - stage: push
+    dependsOn: terraform
     jobs:
      - job: push
        pool:
         vmImage: 'ubuntu-latest'
-        steps:
+       steps:
         - task: Docker@2
           inputs:
             containerRegistry: 'vg1988myacr'
+            repository: myapp
             command: 'push'
+            tags: |
+             $(Build.BuildId)
