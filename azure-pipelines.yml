@@ -72,7 +72,7 @@ stages:
              azureSubscriptionConnection: 'az-resource'
              azureResourceGroup: 'aks-rg'
              kubernetesCluster: 'myaks-cluster'
-             namespace: 'dev'
+             namespace: 'default'
              manifests: |
               manifests/flask-deployment.yaml
               manifests/azure.yaml
