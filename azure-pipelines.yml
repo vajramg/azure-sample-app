@@ -64,10 +64,5 @@ stages:
        pool:
         vmImage: 'ubuntu-latest'
        steps:
-        - task: Docker@2
-          inputs:
-            containerRegistry: 'vg1988myacr'
-            repository: app
-            command: 'push'
-            tags: |
-             $(Build.BuildId)
+       - script: |
+           docker images
