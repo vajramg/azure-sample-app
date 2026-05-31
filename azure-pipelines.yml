@@ -57,6 +57,7 @@ stages:
                inlineScript: |
                 az acr login  --name vg1988myacr
                  docker build -t $(acr).azurecr.io/$(imageName):$(Build.BuildId) ./app
+                 docker images
   - stage: push
     dependsOn: terraform
     jobs:
