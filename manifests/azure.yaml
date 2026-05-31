@@ -12,7 +12,7 @@ metadata:
   uid: 7a39a45e-87f8-4bcb-bc63-41dac0ca801c
 spec:
   parameters:
-    keyvaultName: myvg1988
+    keyvaultName: myvault1988
     objects: |
       array:
         - |
