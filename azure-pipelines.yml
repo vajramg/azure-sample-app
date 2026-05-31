@@ -58,3 +58,25 @@ stages:
                 az acr login  --name $(acr)
                  docker build -t $(acr).azurecr.io/$(imageName):$(Build.BuildId) ./app
                  docker push $(acr).azurecr.io/$(imageName):$(Build.BuildId)
+  - stage:  deploy
+    dependsOn: build
+    jobs:
+     - job: deploy
+       pool:
+        vmImage: 'ubuntu-latest'
+       steps:
+         - task: KubernetesManifest@1
+           inputs:
+             action: 'deploy'
+             connectionType: 'azureResourceManager'
+             azureSubscriptionConnection: 'az-resource'
+             azureResourceGroup: 'aks-rg'
+             kubernetesCluster: 'myaks-cluster'
+             namespace: 'dev'
+             manifests: 'manifests'
+             containers: 'vg1988myacr.azurecr.io/myapp:$(Build.BuildId)'
+             imagePullSecrets: |
+               az aks update \
+                 --name myaks-cluster \
+                 --resource-group aks-rg \
+                 --attach-acr vg1988myacr
