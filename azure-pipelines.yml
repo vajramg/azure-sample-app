@@ -4,8 +4,8 @@ trigger:
      - main
 
 variables:
-   imageName: 
-   acr: my1988vg
+   imageName: myapp
+   acr: vg1988myacr
    repositry:  
      
 stages:
@@ -41,3 +41,28 @@ stages:
                  terraform plan -var-file="dev.tfvars"
 
                  terraform destroy -var-file="dev.tfvars" -auto-approve
+  - stage: build
+    jobs:
+      - job: build
+        pool:
+         vmImage: 'ubuntu-latest'
+         steps:
+           - task: AzureCLI@3
+             inputs:
+               connectionType: 'azureRM'
+               azureSubscription: 'az-resource'
+               scriptType: 'bash'
+               scriptLocation: 'inlineScript'
+               inlineScript: |
+                azure acr login  --name vg1988myacr
+                 docker build -t $(acr).azureacr.io/$(imageName):$(Build:BuildId)
+  - stage: push
+    jobs:
+     - job: push
+       pool:
+        vmImage: 'ubuntu-latest'
+        steps:
+        - task: Docker@2
+          inputs:
+            containerRegistry: 'vg1988myacr'
+            command: 'push'
