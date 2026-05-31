@@ -44,7 +44,7 @@ stages:
   - stage: build
     dependsOn: terraform
     jobs:
-      - job: build
+      - job: build_push
         pool:
          vmImage: 'ubuntu-latest'
         steps:
@@ -55,15 +55,6 @@ stages:
                scriptType: 'bash'
                scriptLocation: 'inlineScript'
                inlineScript: |
-                az acr login  --name vg1988myacr
+                az acr login  --name $(acr)
                  docker build -t $(acr).azurecr.io/$(imageName):$(Build.BuildId) ./app
-                 docker images
-  - stage: push
-    dependsOn: terraform
-    jobs:
-     - job: push
-       pool:
-        vmImage: 'ubuntu-latest'
-       steps:
-       - script: |
-           docker images
+                 docker push $(acr).azurecr.io/$(imageName):$(Build.BuildId)
