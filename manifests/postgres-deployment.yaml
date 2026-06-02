@@ -2,12 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deployment-postgres
+  labels:
+    app: postgres
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: database
+        app: postgres
     spec:
       terminationGracePeriodSeconds: 180
       containers:
