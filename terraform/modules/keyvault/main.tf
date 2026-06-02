@@ -13,21 +13,14 @@ resource "azurerm_key_vault" "vault" {
 
 
   sku_name = "standard"
-
-  access_policy {
+access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
 
-    key_permissions = [
-      "Get",
-    ]
+    object_id = "a93a20fd-6971-4774-bef4-678b5ccdedb8"
 
     secret_permissions = [
       "Get",
-    ]
-
-    storage_permissions = [
-      "Get",
+      "List"
     ]
   }
 }
