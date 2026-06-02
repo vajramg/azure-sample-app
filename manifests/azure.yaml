@@ -1,14 +1,14 @@
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"secrets-store.csi.x-k8s.io/v1","kind":"SecretProviderClass","metadata":{"annotations":{},"name":"azure-kv-sync","namespace":"default"},"spec":{"parameters":{"keyvaultName":"myvg1988","objects":"array:\n  - |\n    objectName: db-password           # keyvault secret name\n    objectType: secret\n","tenantId":"57b08271-f568-4659-9d9e-2776244a6b8c","usePodIdentity":"false","useVMManagedIdentity":"true","userAssignedIdentityID":"5c29225f-111a-4372-9688-a2ab2a06db39"},"provider":"azure"}}
   name: azure-kv-sync
-  namespace: default
 spec:
+  provider: azure
   parameters:
-    keyvaultName: myvault1988
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true" # Set to true for using managed identity
+    userAssignedIdentityID: "e9a3c747-623a-405b-928d-79a9a643171a" # Set the clientID of the user-assigned managed identity to use
+    keyvaultName: myvault1988 # Set to the name of your key vault
     objects: |
       array:
         - |
@@ -20,7 +20,3 @@ spec:
           objectType: secret
 
     tenantId: cf143a5c-8872-49f6-8651-4e40cf7a6a8e
-    usePodIdentity: "false"
-    useVMManagedIdentity: "true"
-    userAssignedIdentityID: a93a20fd-6971-4774-bef4-678b5ccdedb8
-  provider: azure
