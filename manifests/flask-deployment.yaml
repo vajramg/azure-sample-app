@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: my-flask
-          image: mycontainerregistry2508321094.azurecr.io/flask:v3
+          image: vg1988myacr.azurecr.io/myapp:latest
           ports:
             - containerPort: 5000
           resources:
@@ -44,15 +44,15 @@ spec:
               value: "/mnt/secret-store/db-password"
 
           volumeMounts:
-          - name: my-secret
+            - name: my-secret
 
-            mountPath: "/mnt/secret-store"
+              mountPath: "/mnt/secret-store"
 
-            readOnly: true
-      volumes:
-          - name: my-secret
-            csi:
-              driver: secrets-store.csi.k8s.io
               readOnly: true
-              volumeAttributes:
-                secretProviderClass: "azure-kv-sync"
+      volumes:
+        - name: my-secret
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kv-sync"
