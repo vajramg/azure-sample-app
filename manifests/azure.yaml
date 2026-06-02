@@ -23,8 +23,8 @@ spec:
           objectName: db-user1      # keyvault secret name
           objectType: secret
 
-    tenantId: 57b08271-f568-4659-9d9e-2776244a6b8c
+    tenantId: cf143a5c-8872-49f6-8651-4e40cf7a6a8e
     usePodIdentity: "false"
     useVMManagedIdentity: "true"
-    userAssignedIdentityID: 5c29225f-111a-4372-9688-a2ab2a06db39
+    userAssignedIdentityID: a93a20fd-6971-4774-bef4-678b5ccdedb8
   provider: azure
