@@ -10,6 +10,8 @@ resource "azurerm_key_vault" "vault" {
   purge_protection_enabled    = false
 
 
+
+
   sku_name = "standard"
 
   access_policy {
