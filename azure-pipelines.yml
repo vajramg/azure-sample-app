@@ -80,10 +80,25 @@ stages:
               manifests/ingress.yaml
               manifests/postgres-deployment.yaml
               manifests/postgres-secret.yaml
-              pmanifests/vc.yaml
+              manifests/pvc.yaml
               manifests/secret-provder.yaml
               manifests/service.yaml
               manifests/statefulset.yaml
              containers: 'vg1988myacr.azurecr.io/myapp:$(Build.BuildId)'
              imagePullSecrets: ''
+         - task: AzureCLI@2
+           inputs:
+                connectionType: ''
+                azureSubscription: 'az-resource'
+                scriptType: 'bash'
+                scriptLocation: 'inlineScript'
+                inlineScript: |
+                  helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+                  
+                  helm repo update
+                  
+                  helm install ingress-nginx ingress-nginx/ingress-nginx \
+                    --namespace ingress-nginx \
+                    --create-namespace
+
                  
