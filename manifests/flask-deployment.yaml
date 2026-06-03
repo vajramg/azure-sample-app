@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: my-flask
-          image: vg1988myacr.azurecr.io/myapp:latest
+          image: vg1988myacr.azurecr.io/myapp:76
           ports:
             - containerPort: 5000
           resources:

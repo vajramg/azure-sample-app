@@ -12,7 +12,7 @@ spec:
     objects: |
       array:
         - |
-          objectName: db-password           # keyvault secret name
+          objectName: db-password          # keyvault secret name
           objectType: secret
 
         - |
