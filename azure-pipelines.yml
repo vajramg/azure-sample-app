@@ -78,7 +78,6 @@ stages:
               manifests/azure.yaml
               manifests/flask-service.yaml
               manifests/ingress.yaml
-              manifests/postgres-deployment.yaml
               manifests/postgres-secret.yaml
               manifests/pvc.yaml
               manifests/secret-provder.yaml
