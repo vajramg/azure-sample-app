@@ -93,7 +93,10 @@ stages:
                 scriptType: 'bash'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
+                  az aks get-credentials --resource-group aks-rg --name myaks-cluster --overwrite-existing
                   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+                  
+                  kubectl get nodes
                   
                   helm repo update
                   
