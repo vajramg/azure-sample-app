@@ -27,6 +27,7 @@ stages:
                 scriptType: 'bash'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
+                  ls -ltr
                   cd $(tfWorkingDir)
                   
                   terraform init
