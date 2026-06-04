@@ -35,3 +35,25 @@ stages:
                   terraform fmt -check
                   
                   terraform validate
+
+  - stage: plan
+    displayName: terraform plan
+    dependsOn: validate
+    jobs:
+      - job: plan
+        steps:
+        - checkout: self
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
+        
+        - task: AzureCLI@3
+          inputs:
+            connectionType: 'azureRM'
+            azureSubscription: 'az-resource'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              cd $(tfworkkingDir)
+              terraform init
+              terraform plan --var-file="dev.tfvars" -out=tfplan
