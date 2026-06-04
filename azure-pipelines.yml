@@ -1,7 +1,17 @@
 trigger:
- branches:
-   include:
-     - main
+  branches:
+    include:
+      - main
+
+  paths:
+    include:
+      - app/**
+      - manifests/**
+      - azure-pipelines-app.yml
+
+    exclude:
+      - terraform/**
+ 
 
 variables:
    imageName: myapp
