@@ -6,7 +6,7 @@ pool:
  vmImage: 'ubuntu-latest'
 
 variables:
-  tfWorkingDir: ‘terraform’
+  tfWorkingDir: terraform
 
 stages:
   - stage: validate
