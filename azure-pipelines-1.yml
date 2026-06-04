@@ -1,0 +1,50 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+stages:
+- stage: terraform-validate
+  jobs:
+  -  job: validate
+     pool:
+      vmImage: 'ubuntu-latest'
+     steps:
+     - script: |
+         set -x
+              mkdir tfbin
+              cd tfbin
+              wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+              echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+              sudo apt update && sudo apt install terraform
+
+     - task: AzureCLI@3
+       inputs:
+          connectionType: 'azureRM'
+          azureSubscription: 'az-resource'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            az account show                        
+            cd terraform       
+             ls -ltr
+             terraform init
+             terraform validate
+
+- stage: terraform-plan
+  jobs:
+    - job: plan
+      steps: 
+      - script: |
+          terraform plan -var-file="dev.tfvars"
+
+- stage: terraform-apply
+  jobs:
+  - job: apply
+    steps:
+      - script: |
+         terraform apply -var-file="dev.tfvars" -auto-approve
+                  
