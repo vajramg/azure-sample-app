@@ -59,20 +59,26 @@ stages:
   - stage: apply
     displayName: terraform apply
     dependsOn: plan
+
     jobs:
-      - job: apply
-        steps:
-          - checkout: self
-          - task: TerraformInstaller@1
-            inputs:
-              terraformVersion: 'latest'
-          - task: AzureCLI@3
-            inputs:
-              connectionType: 'azureRM'
-              azureSubscription: 'az-resource'
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                cd $(tfworkingDir)
-                terraform init
-                terraform apply --var-file="dev.tfvars" -auto-approve
+     - deployment: 
+       environment: infra-prod
+       strategy:
+        runOnce:
+          deploy:
+
+             steps:
+             - checkout: self
+             - task: TerraformInstaller@1
+               inputs:
+                terraformVersion: 'latest'
+             - task: AzureCLI@3
+               inputs:
+                connectionType: 'azureRM'
+                azureSubscription: 'az-resource'
+                scriptType: 'bash'
+                scriptLocation: 'inlineScript'
+                inlineScript: |
+                 cd $(tfworkingDir)
+                 terraform init
+                 terraform apply --var-file="dev.tfvars" -auto-approve
