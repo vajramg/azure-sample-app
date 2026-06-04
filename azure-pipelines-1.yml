@@ -1,7 +1,6 @@
-trigger:
- paths:
-   include:
-     - terraform/*
+trigger: none
+pr: none
+
 pool:
  vmImage: 'ubuntu-latest'
 
@@ -57,3 +56,23 @@ stages:
               cd $(tfworkingDir)
               terraform init
               terraform plan --var-file="dev.tfvars" -out=tfplan
+  - stage: apply
+    displayName: terraform apply
+    dependsOn: plan
+    jobs:
+      - job: apply
+        steps:
+          - checkout: self
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: AzureCLI@3
+            inputs:
+              connectionType: 'azureRM'
+              azureSubscription: 'az-resource'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                cd $(tfworkingDir)
+                terraform init
+                terraform apply --var-file="dev.tfvars" -auto-approve
