@@ -7,7 +7,7 @@ trigger:
 - main
 
 stages:
-- stage: terraform-validate
+- stage: validate
   jobs:
   -  job: validate
      pool:
@@ -34,14 +34,14 @@ stages:
              terraform init
              terraform validate
 
-- stage: terraform-plan
+- stage: plan
   jobs:
     - job: plan
       steps: 
       - script: |
           terraform plan -var-file="dev.tfvars"
 
-- stage: terraform-apply
+- stage: apply
   jobs:
   - job: apply
     steps:
