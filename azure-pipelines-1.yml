@@ -54,6 +54,6 @@ stages:
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              cd $(tfworkkingDir)
+              cd $(tfworkingDir)
               terraform init
               terraform plan --var-file="dev.tfvars" -out=tfplan
