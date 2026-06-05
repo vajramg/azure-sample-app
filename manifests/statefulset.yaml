@@ -31,7 +31,7 @@ spec:
               readOnly: true
           env:
             - name: POSTGRES_USER_FILE
-              value: /mnt/secret-store/db-user
+              value: /mnt/secret-store/db-user1
             - name: POSTGRES_PASSWORD_FILE
               value: /mnt/secret-store/db-password
             - name: POSTGRES_DB
