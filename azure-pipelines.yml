@@ -42,6 +42,29 @@ stages:
        pool:
         vmImage: 'ubuntu-latest'
        steps:
+         - task: AzureCLI@3
+           inputs:
+             connectionType: 'azureRM'
+             azureSubscription: 'az-resource'
+             scriptType: 'bash'
+             scriptLocation: 'inlineScript'
+             inlineScript: |
+               CLIENT_ID=$(az aks show \
+               
+               -g aks-rg \
+               
+               -n myaks-cluster \
+               
+               --query addonProfiles.azureKeyvaultSecretsProvider.identity.clientId \
+               
+                -o tsv)
+               
+                echo "AKS Key Vault Identity: $CLIENT_ID"
+               
+                sed -i "s/#{CLIENT_ID}#/$CLIENT_ID/g" manifests/secret-provider.yaml
+               
+                cat manifests/secret-provider.yaml
+        
          - task: KubernetesManifest@1
            inputs:
              action: 'deploy'
@@ -70,25 +93,6 @@ stages:
                 scriptType: 'bash'
                 scriptLocation: 'inlineScript'
                 inlineScript: |
-                   CLIENT_ID=$(az aks show \
-
-                   -g aks-rg \
-
-                   -n myaks-cluster \
-
-                   --query addonProfiles.azureKeyvaultSecretsProvider.identity.clientId \
-
-                   -o tsv)
-
-                   echo "AKS Key Vault Identity: $CLIENT_ID"
-
-                   sed -i "s/#{CLIENT_ID}#/$CLIENT_ID/g" manifests/secret-provider.yaml
-
-                   cat manifests/secret-provider.yaml
-
-
-
-
                    az aks get-credentials --resource-group aks-rg --name myaks-cluster --overwrite-existing
                    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
                   
