@@ -50,19 +50,12 @@ stages:
              scriptLocation: 'inlineScript'
              inlineScript: |
                CLIENT_ID=$(az aks show \
-               
                -g aks-rg \
-               
                -n myaks-cluster \
-               
                --query addonProfiles.azureKeyvaultSecretsProvider.identity.clientId \
-               
                 -o tsv)
-               
                 echo "AKS Key Vault Identity: $CLIENT_ID"
-               
                 sed -i "s/#{CLIENT_ID}#/$CLIENT_ID/g" manifests/secret-provider.yaml
-               
                 cat manifests/secret-provider.yaml
         
          - task: KubernetesManifest@1
