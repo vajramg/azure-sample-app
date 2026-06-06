@@ -73,7 +73,7 @@ stages:
               manifests/ingress.yaml
               manifests/postgres-secret.yaml
               manifests/pvc.yaml
-              manifests/secret-provder.yaml
+              manifests/secret-provider.yaml
               manifests/service.yaml
               manifests/statefulset.yaml
              containers: 'vg1988myacr.azurecr.io/myapp:$(Build.BuildId)'
